@@ -1,0 +1,55 @@
+body {
+    background-color: #E8E8E4;
+}
+
+
+.board {
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr 1fr 4fr;
+    grid-auto-rows: 10em;
+}
+
+.title {
+    display: grid;
+    grid-template-columns: 4fr 3fr 4fr;
+    text-align: center;    
+}
+
+.header {
+    margin-top: .5em;
+    font-size: 400%;
+    color: #FFFFFA;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #515052;
+}
+
+.square {
+    background-color: #FFFFFA;
+    border: solid #515052;
+    text-align: center;
+}
+
+#status {
+    font-size: 250%;
+    color: #FFFFFA;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.statusred {
+    background-color: #FF312E;
+}
+
+.statusblue {
+    background-color: #01BAEF;
+}
+
+.x {
+    font-size: 750%;
+    color: #FF312E;
+}
+
+.o {
+    font-size: 750%;
+    color: #01BAEF;
+}
