@@ -53,7 +53,7 @@ function place(me) {
         status.innerHTML = "Player One Wins";
         status.setAttribute("class", "statusred");
         setTimeout(reset, 1000);
-    } else if(isWinnder() == "Player Two Wins") {
+    } else if(isWinner() == "Player Two Wins") {
         status.innerHTML = "Player Two Wins";
         status.setAttribute("class", "statusblue");
         setTimeout(reset, 1000);
@@ -69,5 +69,89 @@ function place(me) {
 
 
 function turn() {
+    return (turn_nr % 2 == 0) ? "two" : "one";
+};
 
-}
+function reset() {
+    status.innerHTML = "";
+
+    for(r = 0; r < squares.length; r++) {
+        squares[r].innerHTML = "";
+    };
+
+    for(var key in board_state) {
+        board_state[key] = 0;
+    };
+
+    turn_nr =1;
+};
+
+
+function updateBoard(location) {
+    let value = 0;
+    turn() == "one" ? value = 5 : value = 1;
+
+    board_state[location] = value;
+};
+
+
+function isWinner() {
+    // convert object to array to analyze
+    
+    let temp = Object.values(board_state);
+
+    // empty array for 3x3
+    let board_state_arr = [];
+
+    // slice object array into 3x3
+    for(x = 0; x + 3 <= temp.length; x+=3) {
+        board_state_arr.push(temp.slice(x, x+3));
+    };
+
+    // Checking for diagonal winner
+    dArray_lr = [];
+    dArray_rl = [];
+
+    for(x = 0, y = board_state_arr.length - 1; x < board_state_arr.length; x++, y--) {
+        dArray_lr.push(board_state_arr[x][x]);
+        dArray_rl.push(board_state_arr[x][y]);
+    };
+
+    if(dArray_lr.reduce((acc, val) => acc + val) == 15 || dArray_rl.reduce((acc, val) => acc + val) == 15) {
+        return "Player One Wins";
+    } else if(dArray_lr.reduce((acc, val) => acc + val) == 3 || dArray_rl.reduce((acc, val) => acc + val) == 3) {
+        return "Player Two Wins";
+    };
+
+
+    // Check for a horizontal winner
+    for(x = 0; x < board_state_arr.length; x++) {
+        if(board_state_arr[x].reduce((acc, val) => acc + val) == 15) {
+            return "Player One Wins";            
+        } else if (board_state_arr[x].reduce((acc, val) => acc + val) == 3) {
+            return "Player Two Wins";
+        }
+    };
+
+    // Check for vertical winner
+    for(x = 0; x < board_state_arr.length; x++) {
+        let verticalArray = [];
+        for(y = 0; y < board_state_arr.length; y++) {
+            verticalArray.push(board_state_arr[y][x]);
+        }
+    
+
+    if(verticalArray.reduce((acc, val) => acc + val) == 15) {
+        return "Player One Wins";        
+    } else if(verticalArray.reduce((acc, val) => acc + val) == 3) {
+        return "Player Two Wins";
+    }
+    };
+    
+    // Check tie
+    if(document.getElementsByClassName("play").length == 9) {
+        return "Tie Game";
+    };
+
+    return;
+};
